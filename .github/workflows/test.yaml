@@ -28,25 +28,28 @@ jobs:
         with:
             push: false
             context: .
-            tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy-yacine:latest
+            tags: node-deploy-yacine:latest
             platforms: linux/amd64
 
       - name: Debug Docker Images
-        run: docker images
-
-      - name: Allow unauthenticated access
-        run: |
-              gcloud run services add-iam-policy-binding node-deploy-yacine \
-                --member="allUsers" \
-                --role="roles/run.invoker" \
-                --region=europe-west1 \
-                --platform=managed      
+        run: docker images   
       
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@main
         with:
           service: node-deploy-yacine
-          image:  gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy-yacine
+          image:  gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy-yacine:latest
           region: europe-west1
           platform: managed
           allow-unauthenticated: true
+
+      - name: Allow unauthenticated access
+        run: |
+                gcloud run services add-iam-policy-binding node-deploy-yacine \
+                  --member="allUsers" \
+                  --role="roles/run.invoker" \
+                  --region=europe-west1 \
+                  --platform=managed  
+
+      - name: Wait for server to be ready
+        run: sleep 10
