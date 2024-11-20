@@ -35,6 +35,11 @@ on:
       - main
 
 env:
+  DB_HOST: ${{ secrets.DB_HOST }}
+  DB_PORT: ${{ secrets.DB_PORT }}
+  DB_DATABASE: ${{ secrets.DB_DATABASE }}
+  DB_USER: ${{ secrets.DB_USER }}
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
   PROJECT_ID: 'student-sandbox-project' # TODO: update to your Google Cloud project ID
   GAR_NAME : my-docker-repo
   GAR_LOCATION : 'us-central1'
