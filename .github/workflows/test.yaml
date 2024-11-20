@@ -50,7 +50,7 @@ jobs:
 
       - name: Allow unauthenticated access
         run: |
-                gcloud run services add-iam-policy-binding node-deploy-yacine \
+                gcloud run services add-iam-policy-binding node-deploy-yacine:latest \
                   --member="allUsers" \
                   --role="roles/run.invoker" \
                   --region=europe-west1 \
