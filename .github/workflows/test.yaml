@@ -31,14 +31,14 @@ jobs:
         with:
             context: .
             push: false
-            tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy
+            tags: europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-docker-repo/node-deploy
             platforms: linux/amd64
       
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@main
         with:
           service: node-deploy
-          image: gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy
+          image:  europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-docker-repo/node-deploy
           region: europe-west1
           platform: managed
           allow-unauthenticated: true
