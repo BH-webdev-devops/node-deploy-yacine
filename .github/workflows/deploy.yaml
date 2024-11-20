@@ -40,7 +40,6 @@ jobs:
       # Step 6: Configure gcloud CLI
       - name: Configure gcloud CLI
         run: |
-          gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
           gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-central1-docker.pkg.dev
 
 
