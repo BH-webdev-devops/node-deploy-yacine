@@ -77,6 +77,14 @@ jobs:
         # Step 4: Build the application
         - name: Build the application
           run: npm run build
+
+        - name: Print environment variables
+          run: |
+            echo DB_HOST=${{ secrets.DB_HOST }}
+            echo DB_PORT=${{ secrets.DB_PORT }}
+            echo DB_DATABASE=${{ secrets.DB_DATABASE }}
+            echo DB_USER=${{ secrets.DB_USER }}
+            echo DB_PASSWORD=${{ secrets.DB_PASSWORD }}
   
         # Optional Step: Start the server for testing (remove if not needed)
         - name: Start the server (if applicable)
