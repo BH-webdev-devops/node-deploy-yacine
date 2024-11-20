@@ -23,12 +23,24 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
+          
+
       - name: Build and Push Docker image
         uses: docker/build-push-action@v4
         with:
             push: false
+            constext: .
             tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy-yacine
             platforms: linux/amd64
+
+
+      - name: Allow unauthenticated access
+        run: |
+              gcloud run services add-iam-policy-binding node-deploy-yacine \
+                --member="allUsers" \
+                --role="roles/run.invoker" \
+                --region=europe-west1 \
+                --platform=managed      
       
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@main
