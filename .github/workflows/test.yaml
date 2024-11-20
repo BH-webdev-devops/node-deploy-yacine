@@ -46,7 +46,7 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@main
         with:
           service: node-deploy-yacine
-          image:  gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy-yacine@latest
+          image:  gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy-yacine
           region: europe-west1
           platform: managed
           allow-unauthenticated: true
