@@ -27,7 +27,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
             context: .
-            push: true
+            push: false
             tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy
             platforms: linux/amd64
       
