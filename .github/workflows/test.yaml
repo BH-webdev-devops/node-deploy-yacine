@@ -42,11 +42,11 @@ jobs:
           
       - name: Deploy to Google Cloud Run
         run: |
-            gcloud run deploy node-deploy-yacine \        
-            --image gcr.io/student-sandbox-project/node-deploy-yacine:latest \
-            --platform managed \
-            --region europe-west1 \
-            --allow-unauthenticated
+                gcloud run deploy node-deploy-yacine \
+                --image gcr.io/student-sandbox-project/node-deploy-yacine:latest \
+                --platform managed \
+                --region europe-west1 \
+                --allow-unauthenticated
 
       - name: Allow unauthenticated access
         run: |
