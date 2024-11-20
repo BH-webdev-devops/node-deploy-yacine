@@ -103,7 +103,7 @@ jobs:
 
         - name: 'Deploy to Cloud Run'
           run: |
-              IMAGE_TAG="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
+              IMAGE_TAG="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{env.GAR_NAME}}/${{ env.SERVICE }}:${{ github.sha }}"
               gcloud run deploy ${{ env.SERVICE }} \
                 --image $IMAGE_TAG \
                 --update-labels managed-by=github-actions,commit-sha=${{ github.sha }} \
