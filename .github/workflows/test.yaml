@@ -1,10 +1,14 @@
-name: Deploy 
+name: Deploy
 
 on:
   push:
     branches:
       - main
   workflow_dispatch:
+
+permissions:
+        id-token: write
+        contents: read
 
 jobs:
   deploy:
@@ -14,6 +18,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Authenticate to Google Cloud
+        id: auth
         uses: google-github-actions/auth@v1
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
@@ -22,14 +27,14 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: false
-          tags: node-test:latest
+          tags: node-deploy
           platforms: linux/amd64
       
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@main
         with:
-          service: node-test
-          image: gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-test:latest
+          service: node-deploy
+          image: gcr.io/student-sandbox-project/node-deploy
           region: europe-west1
           platform: managed
           allow-unauthenticated: true
