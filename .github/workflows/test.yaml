@@ -34,7 +34,7 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@main
         with:
           service: node-deploy
-          image: docker.io/library/node-deploy
+          image: gcr.io/student-sandbox-project/node-deploy
           region: europe-west1
           platform: managed
           allow-unauthenticated: true
