@@ -30,7 +30,7 @@ jobs:
         with:
             push: false
             context: .
-            tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy-yacine
+            tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy-yacine:latest
             platforms: linux/amd64
 
       - name: Debug Docker Images
@@ -48,7 +48,7 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@main
         with:
           service: node-deploy-yacine
-          image:  gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy-yacine
+          image:  gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy-yacine:latest
           region: europe-west1
           platform: managed
           allow-unauthenticated: true
