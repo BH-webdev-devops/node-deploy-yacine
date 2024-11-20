@@ -29,7 +29,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
             push: false
-            constext: .
+            context: .
             tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy-yacine
             platforms: linux/amd64
 
