@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
             context: .
-            push: false
+            push: true
             tags: europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-docker-repo/node-deploy
             platforms: linux/amd64
       
