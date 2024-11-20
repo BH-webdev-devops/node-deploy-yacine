@@ -44,10 +44,6 @@ jobs:
     #       region: europe-west1
     #       platform: managed
 
-      - name: Verify Image Exists
-        run: |
-            gcloud container images describe gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy-yacine:latest
-          
       - name: Deploy to Google Cloud Run
         run: |
                 gcloud run deploy node-deploy-yacine \
