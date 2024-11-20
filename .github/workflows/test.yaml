@@ -21,7 +21,7 @@ jobs:
       - name: Build Docker image
         uses: docker/build-push-action@v4
         with:
-          push: false
+          push: true
           tags: node-deploy:latest
           platforms: linux/amd64
       
