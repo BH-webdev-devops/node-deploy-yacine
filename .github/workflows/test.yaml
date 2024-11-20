@@ -23,14 +23,14 @@ jobs:
         with:
           context: backend/.
           push: false
-          tags: node-deploy-test:latest
+          tags: node-deploy-test
           platforms: linux/amd64
       
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@main
         with:
           service: node-deploy-test
-          image: gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy-test:latest
+          image: gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy-test
           region: europe-west1
           platform: managed
           allow-unauthenticated: true
