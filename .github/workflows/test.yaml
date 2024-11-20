@@ -33,6 +33,8 @@ jobs:
             tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy-yacine
             platforms: linux/amd64
 
+      - name: Debug Docker Images
+        run: docker images
 
       - name: Allow unauthenticated access
         run: |
