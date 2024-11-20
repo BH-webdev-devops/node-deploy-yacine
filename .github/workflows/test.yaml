@@ -32,7 +32,10 @@ jobs:
             platforms: linux/amd64
 
       - name: Debug Docker Images
-        run: docker images   
+        run: docker images
+        
+      - name: Wait for server to be ready
+        run: sleep 30
       
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@main
@@ -43,6 +46,8 @@ jobs:
           platform: managed
           allow-unauthenticated: true
 
+      
+
       - name: Allow unauthenticated access
         run: |
                 gcloud run services add-iam-policy-binding node-deploy-yacine \
@@ -51,5 +56,4 @@ jobs:
                   --region=europe-west1 \
                   --platform=managed  
 
-      - name: Wait for server to be ready
-        run: sleep 10
+      
