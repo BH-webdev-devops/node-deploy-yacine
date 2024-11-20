@@ -30,9 +30,6 @@ jobs:
             context: .
             tags: node-deploy-yacine:latest
             platforms: linux/amd64
-
-      - name: Debug Docker Images
-        run: docker images
         
       - name: Wait for server to be ready
         run: sleep 30
