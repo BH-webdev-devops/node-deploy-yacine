@@ -38,13 +38,13 @@ jobs:
         run: sleep 30
       
       - name: Deploy to Cloud Run
-        uses: google-github-actions/deploy-cloudrun@main
+        uses: google-github-actions/deploy-cloudrun@mv1
         with:
           service: node-deploy-yacine
           image:  gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy-yacine:latest
           region: europe-west1
           platform: managed
-          allow-unauthenticated: true
+          
 
       
 
