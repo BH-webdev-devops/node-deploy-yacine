@@ -1,14 +1,10 @@
-name: Deploy
+name: Deploy 
 
 on:
   push:
     branches:
       - main
   workflow_dispatch:
-
-permissions:
-        id-token: write
-        contents: read
 
 jobs:
   deploy:
@@ -18,46 +14,31 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Authenticate to Google Cloud
-        id: auth
         uses: google-github-actions/auth@v1
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-      - name: Configure Docker to use gcloud as a credential helper
-        run: |
-            gcloud auth configure-docker --quiet
-
-      - name: Build and Push Docker image
+      - name: Build Docker image
         uses: docker/build-push-action@v4
         with:
-            push: false
-            context: backend/.
-            tags: node-deploy-yacine:latest
-            platforms: linux/amd64
-        
+          context: backend/.
+          push: false
+          tags: node-deploy-test:latest
+          platforms: linux/amd64
       
-    #   - name: Deploy to Cloud Run
-    #     uses: google-github-actions/deploy-cloudrun@main
-    #     with:
-    #       service: node-deploy-yacine
-    #       image:  gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy-yacine:latest
-    #       region: europe-west1
-    #       platform: managed
-
-      - name: Deploy to Google Cloud Run
-        run: |
-                gcloud run deploy node-deploy-yacine \
-                --image gcr.io/student-sandbox-project/node-deploy-yacine:latest \
-                --platform managed \
-                --region europe-west1 \
-                --allow-unauthenticated
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@main
+        with:
+          service: node-deploy-test
+          image: gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy-test:latest
+          region: europe-west1
+          platform: managed
+          allow-unauthenticated: true
 
       - name: Allow unauthenticated access
         run: |
-                gcloud run services add-iam-policy-binding node-deploy-yacine:latest \
-                  --member="allUsers" \
-                  --role="roles/run.invoker" \
-                  --region=europe-west1 \
-                  --platform=managed  
-
-      
+          gcloud run services add-iam-policy-binding node-deploy-test \
+            --member="allUsers" \
+            --role="roles/run.invoker" \
+            --region=europe-west1 \
+            --platform=managed
