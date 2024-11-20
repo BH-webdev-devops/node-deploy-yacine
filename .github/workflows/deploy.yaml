@@ -38,6 +38,10 @@ jobs:
           gcloud auth activate-service-account --key-file ./google-credentials.json
           gcloud auth configure-docker --quiet
 
+      - name: Debug credentials file
+        run: cat ./google-credentials.json
+
+
       # Step 6: Configure gcloud CLI
       - name: Configure gcloud CLI
         run: |
