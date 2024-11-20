@@ -26,7 +26,7 @@ jobs:
       - name: Build and Push Docker image
         uses: docker/build-push-action@v4
         with:
-            push: false
+            push: true
             context: backend/.
             tags: node-deploy-yacine:latest
             platforms: linux/amd64
