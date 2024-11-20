@@ -34,8 +34,8 @@ jobs:
       # Step 5: Set up Google Cloud credentials
       - name: Authenticate with Google Cloud
         run: |
-          echo "${{secrets.GOOGLE_CREDENTIALS}}" > ./google-credentials.json
-          gcloud auth login --brief --cred-file=./google-credentials.json --update-adc
+          echo "${{ secrets.GOOGLE_CREDENTIALS }}" > ./google-credentials.json
+          gcloud auth activate-service-account --key-file ./google-credentials.json
           gcloud auth configure-docker --quiet
 
       # Step 6: Configure gcloud CLI
