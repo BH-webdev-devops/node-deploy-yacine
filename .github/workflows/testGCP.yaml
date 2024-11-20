@@ -122,6 +122,7 @@ jobs:
                 --update-labels managed-by=github-actions,commit-sha=${{ github.sha }} \
                 --format json \
                 --region ${{ env.REGION }}
+                --set-env-vars "DB_HOST=${{ secrets.DB_HOST }}" \
                 --set-env-vars "DB_PORT=${{ secrets.DB_PORT }}" \
                 --set-env-vars "DB_DATABASE=${{ secrets.DB_DATABASE }}" \
                 --set-env-vars "DB_USER=${{ secrets.DB_USER }}" \
