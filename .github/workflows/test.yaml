@@ -27,14 +27,14 @@ jobs:
         uses: docker/build-push-action@v4
         with:
             push: false
-            tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy .
+            tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy-yacine
             platforms: linux/amd64
       
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@main
         with:
-          service: node-deploy
-          image:  gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy
+          service: node-deploy-yacine
+          image:  gcr.io/${{ secrets.GCP_PROJECT_ID }}/node-deploy-yacine
           region: europe-west1
           platform: managed
           allow-unauthenticated: true
