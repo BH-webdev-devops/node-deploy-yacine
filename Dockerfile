@@ -10,6 +10,9 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
+# Install typescript globally
+RUN npm install -g typescript
+
 # Copy the source code
 COPY . .
 
@@ -20,7 +23,7 @@ RUN npm run build
 EXPOSE 8080
 
 # Use environment variable for the port
-ENV PORT 8080
+ENV PORT=8080
 
 # Start the application
-CMD ["node", "dist/index.js"]
+CMD ["node", "dist/server.js"]
