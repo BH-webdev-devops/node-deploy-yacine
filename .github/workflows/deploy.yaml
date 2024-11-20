@@ -17,11 +17,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Step 2: Set up Node.js
-      - name: Set up Node.js
+      # Step 2: Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '16'
+
+      # Set up Docker
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
       # Step 3: Install dependencies
       - name: Install dependencies
@@ -31,30 +35,42 @@ jobs:
       - name: Build the application
         run: npm run build
 
+      # Optional Step: Start the server for testing (remove if not needed)
+      - name: Start the server (if applicable)
+        run: npm start &
+        env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
       # Step 5: Set up Google Cloud credentials
-      - name: Set up Google Cloud credentials
-        uses: google-github-actions/auth@v1
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
         with:
-          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+
 
       # Step 6: Configure gcloud CLI
       - name: Configure gcloud CLI
         run: |
-          gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-central1-docker.pkg.dev
-
+          gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
+          gcloud auth configure-docker us-central1-docker.pkg.dev
+          gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin 
 
       # Step 7: Build and push Docker image
       - name: Build and push Docker image
         run: |
-          docker build --platform linux/amd64 -t us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-docker-repo/my-app .
-          gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-central1-docker.pkg.dev
-          docker push us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-docker-repo/my-app:latest
+          docker build -t us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-repo/my-app .
+          docker push us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-repo/my-app
 
       # Step 8: Deploy to Google Cloud Run
       - name: Deploy to Google Cloud Run
         run: |
-          gcloud run deploy my-app \
-            --image us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-docker-repo/my-app:latest \
-            --platform managed \
-            --region ${{ secrets.GCP_REGION }} \
-            --allow-unauthenticated
+         gcloud run deploy my-app \
+          --image us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-repo/my-app \
+          --platform managed \
+          --region ${{ secrets.GCP_REGION }} \
+          --allow-unauthenticated
