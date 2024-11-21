@@ -14,7 +14,7 @@ app.use(cors())
 
 
 app.get('/', (req : Request, res : Response ) : any => {
-    return res.send(`Welcome to our node and postgres API`)
+    return res.send(`Welcome to our node and postgres API deployed on GCP !!`)
 })
 
 app.get('/test', (req : Request, res : Response) : any => {
