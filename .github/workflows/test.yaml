@@ -61,5 +61,14 @@ jobs:
           region: ${{ secrets.GCP_REGION }}
           platform: managed
           allow-authenticated: true
+
+
+      - name: Allow unauthenticated access
+        run: |
+          gcloud run services add-iam-policy-binding node-deploy-yacine \
+            --member="allUsers" \
+            --role="roles/run.invoker" \
+            --region=europe-west1 \
+            --platform=managed
         
         
