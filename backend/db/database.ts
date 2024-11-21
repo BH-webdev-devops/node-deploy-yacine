@@ -3,7 +3,7 @@ import 'dotenv/config'
 
 
 const pool = new Pool({
-  user: process.env.DB_USER,
+  user: process.env.DB_USERNAME,
   host: process.env.DB_HOST,
   database: process.env.DB_DATABASE,
   password: String(process.env.DB_PASSWORD),
